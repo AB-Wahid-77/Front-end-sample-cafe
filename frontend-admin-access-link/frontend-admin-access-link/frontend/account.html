@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Account — Amber &amp; Ash</title>
+<meta name="description" content="Manage your Amber & Ash profile, orders, and reservations.">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="loading-screen" aria-hidden="true"><div class="spinner"></div><span class="load-text">Amber &amp; Ash</span></div>
+<div id="scroll-progress"></div>
+
+<header class="navbar">
+  <div class="container">
+    <a href="index.html" class="brand"><span class="bean">◐</span> Amber &amp; Ash</a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="menu.html">Menu</a>
+      <a href="beverages.html">Beverages</a>
+      <a href="reservation.html">Reservation</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="icon-btn theme-toggle" aria-label="Toggle dark mode">
+        <svg class="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/></svg>
+        <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      </button>
+      <a href="cart.html" class="icon-btn" aria-label="View cart">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.5 3h2l2.7 12.4a2 2 0 002 1.6h8.6a2 2 0 002-1.6L21 8H6"/></svg>
+        <span class="cart-badge">0</span>
+      </a>
+      <button class="hamburger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<div class="menu-overlay"></div>
+<nav class="mobile-menu" aria-label="Mobile">
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="menu.html">Menu</a>
+  <a href="beverages.html">Beverages</a>
+  <a href="reservation.html">Reservation</a>
+  <a href="cart.html">Cart</a>
+  <a href="contact.html">Contact</a>
+</nav>
+
+<main>
+  <section class="page-hero">
+    <div class="container">
+      <p class="breadcrumb"><a href="index.html">Home</a> / My Account</p>
+      <h1 class="section-title">My Account</h1>
+      <p class="section-desc" style="color:rgba(255,248,231,.8);max-width:560px;">Your profile, orders, and reservations, all in one place.</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:56px;">
+    <div class="container" style="max-width:900px;">
+      <div id="account-content"><p style="text-align:center;color:var(--text-soft);">Loading your account…</p></div>
+    </div>
+  </section>
+</main>
+
+<button id="back-to-top" aria-label="Back to top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="brand" style="color:var(--cream);"><span class="bean" style="color:var(--gold);">◐</span> Amber &amp; Ash</a>
+        <p>An artisan café and roastery — small-batch beans, honest food, and a room built for slow mornings.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <a href="index.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="menu.html">Menu</a>
+        <a href="reservation.html">Reservation</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="footer-col">
+        <h4>Opening Hours</h4>
+        <div class="hours-row"><span>Mon – Fri</span><span>7am – 8pm</span></div>
+        <div class="hours-row"><span>Saturday</span><span>8am – 9pm</span></div>
+        <div class="hours-row"><span>Sunday</span><span>8am – 6pm</span></div>
+      </div>
+      <div class="footer-col">
+        <h4>Newsletter</h4>
+        <form class="newsletter-form" onsubmit="event.preventDefault(); showToast('Subscribed! Check your inbox soon.'); this.reset();">
+          <input type="email" required placeholder="Your email">
+          <button type="submit" class="btn btn-primary btn-sm">Join</button>
+        </form>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Amber &amp; Ash Café. All rights reserved.</span>
+      <span>Crafted with care, one cup at a time.</span>
+      <a href="admin-login.html" style="color:rgba(255,248,231,.35);font-size:.78rem;">Staff Login</a>
+    </div>
+  </div>
+</footer>
+
+<script src="js/api.js"></script>
+<script src="js/data.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/reviews.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/main.js"></script>
+<script>
+  /* ==========================================================================
+     PART 3: customer account page.
+     - Profile view/edit -> PATCH /auth/customer/me (name, phone)
+     - Password change -> PATCH /auth/customer/password
+     - Orders -> GET /auth/customer/orders
+     - Reservations -> GET /reservations (already used by Part 2), with
+       cancel via PATCH /reservations/:id/cancel
+     - Reviews: the backend has no "list my reviews across all
+       products" endpoint (only per-product review lists exist), so
+       this tab does NOT invent one — it points to the existing
+       per-product review modal from Part 2 instead of faking a list.
+     ========================================================================== */
+  const accountEl = document.getElementById("account-content");
+  let activeTab = "profile";
+  let ordersLoaded = false, reservationsLoaded = false;
+  let ordersCache = [], reservationsCache = [];
+
+  const STATUS_LABELS = {
+    pending: "Pending", confirmed: "Confirmed", preparing: "Preparing", ready: "Ready",
+    completed: "Completed", cancelled: "Cancelled", rejected: "Rejected", no_show: "No-show",
+  };
+  function statusPill(status){
+    return `<span class="status-pill status-${status}">${STATUS_LABELS[status] || status}</span>`;
+  }
+
+  async function initAccountPage(){
+    await restoreCustomerSession();
+    if(!currentCustomer){
+      window.location.href = "login.html";
+      return;
+    }
+    renderAccountShell();
+  }
+
+  function renderAccountShell(){
+    accountEl.innerHTML = `
+      <div class="account-tabs" data-reveal>
+        <button type="button" class="account-tab active" data-tab="profile">Profile</button>
+        <button type="button" class="account-tab" data-tab="orders">Orders</button>
+        <button type="button" class="account-tab" data-tab="reservations">Reservations</button>
+        <button type="button" class="account-tab" data-tab="reviews">Reviews</button>
+      </div>
+      <div id="account-tab-content"></div>
+    `;
+    document.querySelectorAll(".account-tab").forEach(btn=>{
+      btn.addEventListener("click", () => switchTab(btn.dataset.tab));
+    });
+    switchTab("profile");
+    initScrollReveal();
+  }
+
+  function switchTab(tab){
+    activeTab = tab;
+    document.querySelectorAll(".account-tab").forEach(btn=>{
+      btn.classList.toggle("active", btn.dataset.tab === tab);
+    });
+    if(tab === "profile") renderProfileTab();
+    else if(tab === "orders") renderOrdersTab();
+    else if(tab === "reservations") renderReservationsTab();
+    else if(tab === "reviews") renderReviewsTab();
+  }
+
+  /* ---------- Profile tab ---------- */
+  function renderProfileTab(){
+    const wrap = document.getElementById("account-tab-content");
+    const c = currentCustomer;
+    const memberSince = c.createdAt ? new Date(c.createdAt).toLocaleDateString(undefined, { year:"numeric", month:"long" }) : "";
+
+    wrap.innerHTML = `
+      <div class="form-card" data-reveal="scale">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:22px;flex-wrap:wrap;gap:10px;">
+          <h3>Profile Information</h3>
+          <button type="button" class="btn btn-outline btn-sm" id="edit-profile-btn">Edit Profile</button>
+        </div>
+        <div id="profile-view">
+          <div class="account-info-row"><span>Full name</span><strong>${c.name}</strong></div>
+          <div class="account-info-row"><span>Email</span><strong>${c.email}</strong></div>
+          <div class="account-info-row"><span>Phone number</span><strong>${c.phone ? c.phone : `<span style="color:var(--text-soft);font-weight:400;">Not set — required to make a reservation</span>`}</strong></div>
+          ${memberSince ? `<div class="account-info-row"><span>Member since</span><strong>${memberSince}</strong></div>` : ""}
+        </div>
+        <form id="profile-edit-form" class="form-grid" style="display:none;margin-top:6px;" novalidate>
+          <div class="field"><label for="pf-name">Full name <span class="req">*</span></label>
+            <input type="text" id="pf-name" value="${c.name}"><span class="error-msg"></span></div>
+          <div class="field"><label for="pf-phone">Phone number</label>
+            <input type="tel" id="pf-phone" value="${c.phone || ""}" placeholder="+1 555 123 4567"><span class="error-msg"></span></div>
+          <div class="field full" style="display:flex;gap:10px;margin-top:4px;">
+            <button type="submit" class="btn btn-primary btn-sm">Save Changes</button>
+            <button type="button" class="btn btn-outline btn-sm" id="cancel-edit-btn">Cancel</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="form-card" data-reveal="scale" style="margin-top:24px;">
+        <h3 style="margin-bottom:22px;">Change Password</h3>
+        <form id="password-form" class="form-grid" novalidate>
+          <div class="field full"><label for="pw-current">Current password <span class="req">*</span></label>
+            <input type="password" id="pw-current" autocomplete="current-password"><span class="error-msg"></span></div>
+          <div class="field"><label for="pw-new">New password <span class="req">*</span></label>
+            <input type="password" id="pw-new" autocomplete="new-password"><span class="error-msg"></span></div>
+          <div class="field"><label for="pw-confirm">Confirm new password <span class="req">*</span></label>
+            <input type="password" id="pw-confirm" autocomplete="new-password"><span class="error-msg"></span></div>
+          <div class="field full">
+            <button type="submit" class="btn btn-primary btn-sm">Update Password</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="form-card" data-reveal="scale" style="margin-top:24px;text-align:center;">
+        <button type="button" class="btn btn-outline" id="account-logout-btn">Log Out</button>
+      </div>
+    `;
+    initScrollReveal();
+
+    document.getElementById("edit-profile-btn").addEventListener("click", () => {
+      document.getElementById("profile-view").style.display = "none";
+      document.getElementById("profile-edit-form").style.display = "grid";
+    });
+    document.getElementById("cancel-edit-btn").addEventListener("click", () => {
+      document.getElementById("profile-view").style.display = "block";
+      document.getElementById("profile-edit-form").style.display = "none";
+    });
+    document.getElementById("profile-edit-form").addEventListener("submit", handleProfileSave);
+    document.getElementById("password-form").addEventListener("submit", handlePasswordChange);
+    document.getElementById("account-logout-btn").addEventListener("click", () => {
+      logoutCustomer();
+      window.location.href = "index.html";
+    });
+  }
+
+  async function handleProfileSave(e){
+    e.preventDefault();
+    const nameEl = document.getElementById("pf-name");
+    const phoneEl = document.getElementById("pf-phone");
+
+    const checks = [
+      validateField(nameEl, { required:true }),
+      phoneEl.value.trim() ? validateField(phoneEl, { phone:true }) : true,
+    ];
+    if(!checks.every(Boolean)){
+      showToast("Please fix the highlighted fields");
+      return;
+    }
+
+    const submitBtn = e.target.querySelector("button[type='submit']");
+    submitBtn.disabled = true;
+
+    try{
+      const res = await API.updateCustomerProfile({ name: nameEl.value.trim(), phone: phoneEl.value.trim() });
+      currentCustomer = res.data.customer;
+      renderAccountNav();
+      showToast("Profile updated");
+      renderProfileTab();
+    }catch(err){
+      showToast(err.message);
+      submitBtn.disabled = false;
+    }
+  }
+
+  async function handlePasswordChange(e){
+    e.preventDefault();
+    const currentEl = document.getElementById("pw-current");
+    const newEl = document.getElementById("pw-new");
+    const confirmEl = document.getElementById("pw-confirm");
+
+    let ok = validateField(currentEl, { required:true });
+    ok = validateField(newEl, { required:true }) && ok;
+    ok = validateField(confirmEl, { required:true }) && ok;
+
+    if(ok && newEl.value.length < 8){
+      setFieldError(newEl, "Password must be at least 8 characters.");
+      ok = false;
+    }
+    if(ok && newEl.value !== confirmEl.value){
+      setFieldError(confirmEl, "Passwords do not match.");
+      ok = false;
+    }
+    if(!ok){
+      showToast("Please fix the highlighted fields");
+      return;
+    }
+
+    const submitBtn = e.target.querySelector("button[type='submit']");
+    submitBtn.disabled = true;
+
+    try{
+      await API.changeCustomerPassword({ currentPassword: currentEl.value, newPassword: newEl.value });
+      showToast("Password changed successfully");
+      e.target.reset();
+    }catch(err){
+      showToast(err.message);
+    }finally{
+      submitBtn.disabled = false;
+    }
+  }
+
+  function setFieldError(input, message){
+    const field = input.closest(".field");
+    field.classList.add("error");
+    field.querySelector(".error-msg").textContent = message;
+  }
+
+  /* ---------- Orders tab ---------- */
+  async function renderOrdersTab(){
+    const wrap = document.getElementById("account-tab-content");
+    wrap.innerHTML = `<p style="text-align:center;color:var(--text-soft);padding:30px 0;">Loading your orders…</p>`;
+
+    if(!ordersLoaded){
+      try{
+        const res = await API.getCustomerOrders();
+        ordersCache = res.data.orders;
+        ordersLoaded = true;
+      }catch(err){
+        wrap.innerHTML = `<p style="text-align:center;color:var(--text-soft);padding:30px 0;">${err.message}</p>`;
+        return;
+      }
+    }
+
+    if(!ordersCache.length){
+      wrap.innerHTML = `
+        <div class="empty-cart" data-reveal>
+          <h3>No orders yet</h3>
+          <p>Your past orders will show up here.</p>
+          <a href="menu.html" class="btn btn-primary">Browse the Menu</a>
+        </div>`;
+      initScrollReveal();
+      return;
+    }
+
+    wrap.innerHTML = `<div class="account-list stagger">${ordersCache.map(orderRowHTML).join("")}</div>`;
+    initScrollReveal();
+  }
+
+  function orderRowHTML(order){
+    const itemsSummary = order.items.map(i => `${i.name} × ${i.quantity}`).join(", ");
+    return `
+    <div class="account-list-row" data-reveal>
+      <div class="account-list-row-head">
+        <strong>${order.orderNumber}</strong>
+        ${statusPill(order.status)}
+      </div>
+      <p class="account-list-row-meta">${new Date(order.createdAt).toLocaleString()}</p>
+      <p class="account-list-row-detail">${itemsSummary}</p>
+      <div class="account-list-row-foot">
+        <span>Total: <strong>$${order.total.toFixed(2)}</strong> <span style="color:var(--text-soft);font-weight:400;">(incl. $${order.deliveryFee.toFixed(2)} delivery)</span></span>
+      </div>
+    </div>`;
+  }
+
+  /* ---------- Reservations tab ---------- */
+  async function renderReservationsTab(){
+    const wrap = document.getElementById("account-tab-content");
+    wrap.innerHTML = `<p style="text-align:center;color:var(--text-soft);padding:30px 0;">Loading your reservations…</p>`;
+
+    if(!reservationsLoaded){
+      try{
+        const res = await API.getMyReservations();
+        reservationsCache = res.data.reservations;
+        reservationsLoaded = true;
+      }catch(err){
+        wrap.innerHTML = `<p style="text-align:center;color:var(--text-soft);padding:30px 0;">${err.message}</p>`;
+        return;
+      }
+    }
+
+    if(!reservationsCache.length){
+      wrap.innerHTML = `
+        <div class="empty-cart" data-reveal>
+          <h3>No reservations yet</h3>
+          <p>Book a table and it'll show up here.</p>
+          <a href="reservation.html" class="btn btn-primary">Book a Table</a>
+        </div>`;
+      initScrollReveal();
+      return;
+    }
+
+    wrap.innerHTML = `<div class="account-list stagger">${reservationsCache.map(reservationRowHTML).join("")}</div>`;
+    initScrollReveal();
+
+    document.querySelectorAll("[data-cancel-reservation]").forEach(btn=>{
+      btn.addEventListener("click", () => handleCancelReservation(btn.dataset.cancelReservation));
+    });
+  }
+
+  const CANCELLABLE = ["pending", "confirmed"];
+  function reservationRowHTML(r){
+    return `
+    <div class="account-list-row" data-reveal>
+      <div class="account-list-row-head">
+        <strong>${r.reservationNumber}</strong>
+        ${statusPill(r.status)}
+      </div>
+      <p class="account-list-row-meta">${r.date} at ${r.time} · Party of ${r.partySize}</p>
+      ${r.specialRequest ? `<p class="account-list-row-detail">${r.specialRequest}</p>` : ""}
+      ${CANCELLABLE.includes(r.status) ? `<div class="account-list-row-foot"><button type="button" class="btn btn-outline btn-sm" data-cancel-reservation="${r._id}">Cancel Reservation</button></div>` : ""}
+    </div>`;
+  }
+
+  async function handleCancelReservation(id){
+    try{
+      await API.cancelReservation(id);
+      showToast("Reservation cancelled");
+      reservationsLoaded = false;
+      renderReservationsTab();
+    }catch(err){
+      showToast(err.message);
+    }
+  }
+
+  /* ---------- Reviews tab ----------
+     No backend endpoint lists a customer's reviews across products —
+     only GET /products/:productId/reviews exists (per-product,
+     public). Rather than loop over every product to fake a "my
+     reviews" list, this tab is honest about that gap and points to
+     the real, existing capability: the Reviews modal already on every
+     product ticket (js/reviews.js, Part 2), where a logged-in
+     customer can view/edit/delete their own review. */
+  function renderReviewsTab(){
+    const wrap = document.getElementById("account-tab-content");
+    wrap.innerHTML = `
+      <div class="form-card" data-reveal="scale" style="text-align:center;">
+        <h3 style="margin-bottom:14px;">Your Reviews</h3>
+        <p style="color:var(--text-soft);max-width:480px;margin:0 auto 20px;">
+          There isn't a single list of all your reviews yet — but you can view, edit, or delete
+          any review you've left by opening the <strong>Reviews</strong> button on that item's
+          card in the Menu or Beverages page.
+        </p>
+        <a href="menu.html" class="btn btn-primary">Browse the Menu</a>
+      </div>`;
+    initScrollReveal();
+  }
+
+  initAccountPage();
+</script>
+</body>
+</html>
