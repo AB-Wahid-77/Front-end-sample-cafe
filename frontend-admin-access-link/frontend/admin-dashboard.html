@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard — Amber &amp; Ash</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="admin-shell">
+  <aside class="admin-sidebar">
+    <div class="brand"><span class="bean">◐</span>&nbsp;Amber &amp; Ash</div>
+    <a href="#" class="admin-nav-link active" data-section="overview">Overview</a>
+    <a href="#" class="admin-nav-link" data-section="products">Products</a>
+    <a href="#" class="admin-nav-link" data-section="orders">Orders</a>
+    <a href="#" class="admin-nav-link" data-section="reservations">Reservations</a>
+    <a href="#" class="admin-nav-link" data-section="reviews">Reviews</a>
+    <a href="#" class="admin-nav-link" data-section="customers">Customers</a>
+    <div class="admin-sidebar-foot">
+      <p style="font-size:.8rem;opacity:.7;margin-bottom:10px;">Logged in as<br><strong id="admin-name" style="opacity:1;">…</strong></p>
+      <button type="button" class="btn btn-outline btn-sm btn-block" id="admin-logout-btn" style="border-color:rgba(255,248,231,.4);color:var(--cream);">Log Out</button>
+    </div>
+  </aside>
+
+  <main class="admin-main">
+    <div class="admin-topbar">
+      <h1 id="admin-page-title">Overview</h1>
+    </div>
+    <div id="admin-content"><p style="text-align:center;color:var(--text-soft);padding:40px 0;">Loading…</p></div>
+  </main>
+</div>
+
+<div id="toast-wrap"></div>
+
+<script src="js/api.js"></script>
+<script src="js/admin-auth.js"></script>
+<script src="js/main.js"></script>
+<script src="js/admin.js"></script>
+<script>
+  initAdminDashboard();
+</script>
+</body>
+</html>

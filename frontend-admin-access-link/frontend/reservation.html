@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Book a Table — Amber &amp; Ash</title>
+<meta name="description" content="Reserve a table at Amber & Ash café and roastery.">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div id="loading-screen" aria-hidden="true"><div class="spinner"></div><span class="load-text">Amber &amp; Ash</span></div>
+<div id="scroll-progress"></div>
+
+<header class="navbar">
+  <div class="container">
+    <a href="index.html" class="brand"><span class="bean">◐</span> Amber &amp; Ash</a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="menu.html">Menu</a>
+      <a href="beverages.html">Beverages</a>
+      <a href="reservation.html">Reservation</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="nav-actions">
+      <button class="icon-btn theme-toggle" aria-label="Toggle dark mode">
+        <svg class="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/></svg>
+        <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+      </button>
+      <a href="cart.html" class="icon-btn" aria-label="View cart">
+        <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.5 3h2l2.7 12.4a2 2 0 002 1.6h8.6a2 2 0 002-1.6L21 8H6"/></svg>
+        <span class="cart-badge">0</span>
+      </a>
+      <button class="hamburger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+
+<div class="menu-overlay"></div>
+<nav class="mobile-menu" aria-label="Mobile">
+  <a href="index.html">Home</a>
+  <a href="about.html">About</a>
+  <a href="menu.html">Menu</a>
+  <a href="beverages.html">Beverages</a>
+  <a href="reservation.html">Reservation</a>
+  <a href="cart.html">Cart</a>
+  <a href="contact.html">Contact</a>
+</nav>
+
+<main>
+  <section class="page-hero">
+    <div class="container">
+      <p class="breadcrumb"><a href="index.html">Home</a> / Reservation</p>
+      <h1 class="section-title">Book a Table</h1>
+      <p class="section-desc" style="color:rgba(255,248,231,.8);max-width:560px;">Tell us when you're coming and how many, and we'll have your table ready.</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:56px;">
+    <div class="container" style="max-width:820px;">
+      <div class="form-card" data-reveal="scale">
+        <form id="reservation-form" novalidate>
+          <div class="form-grid">
+            <div class="field">
+              <label for="r-name">Full name <span class="req">*</span></label>
+              <input type="text" id="r-name" name="name" placeholder="Your full name">
+              <span class="error-msg"></span>
+            </div>
+            <div class="field">
+              <label for="r-email">Email <span class="req">*</span></label>
+              <input type="email" id="r-email" name="email" placeholder="you@example.com">
+              <span class="error-msg"></span>
+            </div>
+            <div class="field">
+              <label for="r-phone">Phone <span class="req">*</span></label>
+              <input type="tel" id="r-phone" name="phone" placeholder="+1 555 123 4567">
+              <span class="error-msg"></span>
+            </div>
+            <div class="field">
+              <label for="r-guests">Guests <span class="req">*</span></label>
+              <select id="r-guests" name="guests">
+                <option value="">Select guests</option>
+                <option>1 Guest</option><option>2 Guests</option><option>3 Guests</option>
+                <option>4 Guests</option><option>5 Guests</option><option>6+ Guests</option>
+              </select>
+              <span class="error-msg"></span>
+            </div>
+            <div class="field">
+              <label for="r-date">Date <span class="req">*</span></label>
+              <input type="date" id="r-date" name="date">
+              <span class="error-msg"></span>
+            </div>
+            <div class="field">
+              <label for="r-time">Time <span class="req">*</span></label>
+              <input type="time" id="r-time" name="time">
+              <span class="error-msg"></span>
+            </div>
+            <div class="field full">
+              <label for="r-message">Message (optional)</label>
+              <textarea id="r-message" name="message" placeholder="Window seat, allergies, celebration — anything we should know."></textarea>
+              <span class="error-msg"></span>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block">Confirm Reservation</button>
+        </form>
+
+        <div class="success-box" id="success-box">
+          <div class="success-ring">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l6 6L20 6"/></svg>
+          </div>
+          <h3>Table reserved!</h3>
+          <p style="color:var(--text-soft);margin-top:8px;">A confirmation has been sent to your email. We'll see you soon.</p>
+          <button class="btn btn-outline" style="margin-top:20px;" onclick="resetReservation()">Book Another Table</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<button id="back-to-top" aria-label="Back to top"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="brand" style="color:var(--cream);"><span class="bean" style="color:var(--gold);">◐</span> Amber &amp; Ash</a>
+        <p>An artisan café and roastery — small-batch beans, honest food, and a room built for slow mornings.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <a href="index.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="menu.html">Menu</a>
+        <a href="reservation.html">Reservation</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="footer-col">
+        <h4>Opening Hours</h4>
+        <div class="hours-row"><span>Mon – Fri</span><span>7am – 8pm</span></div>
+        <div class="hours-row"><span>Saturday</span><span>8am – 9pm</span></div>
+        <div class="hours-row"><span>Sunday</span><span>8am – 6pm</span></div>
+      </div>
+      <div class="footer-col">
+        <h4>Newsletter</h4>
+        <form class="newsletter-form" onsubmit="event.preventDefault(); showToast('Subscribed! Check your inbox soon.'); this.reset();">
+          <input type="email" required placeholder="Your email">
+          <button type="submit" class="btn btn-primary btn-sm">Join</button>
+        </form>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Amber &amp; Ash Café. All rights reserved.</span>
+      <span>Crafted with care, one cup at a time.</span>
+      <a href="admin-login.html" style="color:rgba(255,248,231,.35);font-size:.78rem;">Staff Login</a>
+    </div>
+  </div>
+</footer>
+
+<script src="js/api.js"></script>
+<script src="js/data.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/reviews.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/main.js"></script>
+<script>
+  const form = document.getElementById("reservation-form");
+  const successBox = document.getElementById("success-box");
+
+  function resetReservation(){
+    successBox.classList.remove("show");
+    form.style.display = "block";
+    form.reset();
+  }
+
+  // Prefill from the logged-in customer's account, like checkout does.
+  if(currentCustomer){
+    document.getElementById("r-name").value = currentCustomer.name || "";
+    document.getElementById("r-email").value = currentCustomer.email || "";
+    if(currentCustomer.phone) document.getElementById("r-phone").value = currentCustomer.phone;
+  }
+
+  form.addEventListener("submit", async (e)=>{
+    e.preventDefault();
+    const name = document.getElementById("r-name");
+    const email = document.getElementById("r-email");
+    const phone = document.getElementById("r-phone");
+    const guests = document.getElementById("r-guests");
+    const date = document.getElementById("r-date");
+    const time = document.getElementById("r-time");
+    const message = document.getElementById("r-message");
+
+    const checks = [
+      validateField(name, { required:true }),
+      validateField(email, { required:true, email:true }),
+      validateField(phone, { required:true, phone:true }),
+      validateField(guests, { required:true }),
+      validateField(date, { required:true }),
+      validateField(time, { required:true })
+    ];
+
+    if(!checks.every(Boolean)){
+      showToast("Please fix the highlighted fields");
+      return;
+    }
+
+    // The existing "1 Guest".."6+ Guests" options map to the backend's
+    // integer partySize (1-20) by taking the leading number; "6+"
+    // becomes 6, since the backend has no "or more" concept.
+    const partySize = parseInt(guests.value, 10) || 1;
+
+    const submitBtn = form.querySelector("button[type=submit]");
+    submitBtn.disabled = true;
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = "Booking…";
+
+    try{
+      const payload = {
+        date: date.value,
+        time: time.value,
+        partySize,
+        specialRequest: message.value.trim(),
+      };
+      if(!currentCustomer){
+        // Guests must supply contact details directly — an
+        // authenticated customer's account details are used instead
+        // by the backend regardless of what's sent here.
+        payload.customerDetails = {
+          name: name.value.trim(),
+          email: email.value.trim(),
+          phone: phone.value.trim(),
+        };
+      }
+
+      const res = await API.createReservation(payload);
+      form.style.display = "none";
+      successBox.classList.add("show");
+      successBox.querySelector("p").textContent =
+        `Reservation ${res.data.reservation.reservationNumber} confirmed for ${res.data.reservation.date} at ${res.data.reservation.time}, party of ${res.data.reservation.partySize}.`;
+      showToast("Reservation requested!");
+    }catch(err){
+      showToast(err.message || "Could not complete your reservation. Please try again.");
+    }finally{
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalText;
+    }
+  });
+
+  // set min date to today, and constrain time to the café's booking
+  // window (08:00–22:00) to match the backend's validation rule.
+  document.getElementById("r-date").min = new Date().toISOString().split("T")[0];
+  document.getElementById("r-time").min = "08:00";
+  document.getElementById("r-time").max = "22:00";
+</script>
+</body>
+</html>
